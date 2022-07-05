@@ -1,9 +1,6 @@
 import requests
 import pandas as pd
-import sqalchemy as db
-
-def create_info_table(response):
-	service_data = response['location']['display_name']
+import sqlalchemy as db
 
 
 # lookup endpoint of Utelly api
