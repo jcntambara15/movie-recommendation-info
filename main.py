@@ -1,5 +1,12 @@
 import requests
+import pandas as pd
+import sqalchemy as db
 
+def create_info_table(response):
+	service_data = response['location']['display_name']
+
+
+# lookup endpoint of Utelly api
 url = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup"
 
 querystring = {"term":"bojack","country":"uk"}
