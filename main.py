@@ -21,9 +21,9 @@ query_string ={'session_id': 'c72032122d67260cc02034445c4206ba96a84f0e'}
 
 #prints the list id used to add recommended movies
 listUrl = 'https://api.themoviedb.org/3/list?api_key=dd1c306527d8caa33b2acb40c88ce2ae'
-responseL = requests.post(listUrl, headers=header, json=list_body, params=query_string)
-print(responseL.json())
+#responseL = requests.post(listUrl, headers=header, json=list_body, params=query_string)
+#print(responseL.json())
 
 def database():
     # https://developers.themoviedb.org/3/movies/get-movie-recommendations
- sample = requests.get('https://api.themoviedb.org/3/movie/438148/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
+    sample = requests.get('https://api.themoviedb.org/3/movie/438148/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
