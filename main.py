@@ -6,6 +6,9 @@ import json
 session_id= 'c72032122d67260cc02034445c4206ba96a84f0e'
 list_id = '8209394'
 
+session_id= 'c72032122d67260cc02034445c4206ba96a84f0e'
+list_id = '8209391'
+
 # request token used in retriving sesion id 
 mykey ={'request_token': '00b55b48576f0ad50239e00e35a9acd0c7091d2f'}
 # api_key
