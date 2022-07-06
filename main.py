@@ -1,14 +1,25 @@
 import requests
+import pandas as pd
+import sqlalchemy as db	
+import json
 
-url = "https://utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com/lookup"
+session_id= 'c72032122d67260cc02034445c4206ba96a84f0e'
+list_id = '8209394'
 
-querystring = {"term":"bojack","country":"uk"}
+session_id= 'c72032122d67260cc02034445c4206ba96a84f0e'
+list_id = '8209391'
 
-headers = {
-	"X-RapidAPI-Key": "810b9b6234msh366e8e207f34b19p1d8783jsn241cbe87fe8e",
-	"X-RapidAPI-Host": "utelly-tv-shows-and-movies-availability-v1.p.rapidapi.com"
-}
+# request token used in retriving sesion id 
+mykey ={'request_token': '00b55b48576f0ad50239e00e35a9acd0c7091d2f'}
+# api_key
+api_key ='dd1c306527d8caa33b2acb40c88ce2ae'
 
-response = requests.request("GET", url, headers=headers, params=querystring)
+#parts for the creating a list
+list_body = {'name': 'Movie recommendation', 'description': 'List of movies to be recommended', 'language': 'en'}
+header = {'Content-Type': 'application/json;charset=utf-8'}
+query_string ={'session_id': 'c72032122d67260cc02034445c4206ba96a84f0e'}
 
-print(response.text)
+#prints the list id used to add recommended movies
+listUrl = 'https://api.themoviedb.org/3/list?api_key=dd1c306527d8caa33b2acb40c88ce2ae'
+responseL = requests.post(listUrl, headers=header, json=list_body, params=query_string)
+print(responseL.json())
