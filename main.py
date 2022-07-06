@@ -27,3 +27,7 @@ listUrl = 'https://api.themoviedb.org/3/list?api_key=dd1c306527d8caa33b2acb40c88
 def database():
     # https://developers.themoviedb.org/3/movies/get-movie-recommendations
     sample = requests.get('https://api.themoviedb.org/3/movie/438148/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
+    return sample
+
+data = database()
+print(data)
