@@ -30,6 +30,7 @@ def database():
  sample = requests.get('https://api.themoviedb.org/3/movie/438148/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
  return sample
 
+
 # pprint.pprint(database())
 def get_movie_list(response):
     """Creating a list of movies"""
@@ -38,12 +39,10 @@ def get_movie_list(response):
         list_movies.append(dict_item['title'])
     return list_movies
 
+
 def create_database(response):
-    """Getting a movie from each dictionary and add it to the database"""
-    my_data_frame = pd.DataFrame(
-                get_movie_list(response), 
-                columns=['movies']
-                )
+    """Adding the list of movies to a database"""
+    my_data_frame = pd.DataFrame(get_movie_list(response))
     engine = db.create_engine('sqlite:///movies.db')
     my_data_frame.to_sql('data', con=engine, if_exists='replace', index=False)
     query_result = engine.execute("SELECT * FROM data;").fetchall()
@@ -51,7 +50,6 @@ def create_database(response):
 
 
 movies = database()['results']
-print(json.dumps(movies, indent=4))
-create_database(movies)
-print(get_movie_list(movies))
-
+print(create_database(movies))
+# print(json.dumps(movies, indent=4))
+# print(get_movie_list(movies))
