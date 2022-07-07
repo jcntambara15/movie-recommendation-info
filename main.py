@@ -59,7 +59,7 @@ def create_database(response):
 
 movies = database()['results']
 watchL = get_watch()
-#print(create_database(movies))
+print(create_database(movies))
 # print(json.dumps(movies, indent=4))
 # print(get_movie_list(movies))
 pprint.pprint(watchL)
