@@ -25,9 +25,9 @@ listUrl = 'https://api.themoviedb.org/3/list?api_key=dd1c306527d8caa33b2acb40c88
 #responseL = requests.post(listUrl, headers=header, json=list_body, params=query_string)
 #print(responseL.json())
 
-def database():
+def movie_entry(id):
     # https://developers.themoviedb.org/3/movies/get-movie-recommendations
- sample = requests.get('https://api.themoviedb.org/3/movie/438148/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
+ sample = requests.get('https://api.themoviedb.org/3/movie/'+str(id)+'/recommendations?api_key=dd1c306527d8caa33b2acb40c88ce2ae&language=en-US&page=1').json();
  return sample
 
 
@@ -39,14 +39,23 @@ def get_movie_list(response):
         list_movies.append(dict_item['title'])
     return list_movies
 
+#returns a list of id from the list of recommended movies
+def get_id_list(response):
+    """Creating a list of movies"""
+    list_ids = []
+    for dict_item in response:
+        list_ids.append(dict_item['id'])
+    return list_ids
+
 #this function returns streaming services for a movie in the U.S region
-def get_watch():
-    watch_pro = requests.get('https://api.themoviedb.org/3/movie/508947/watch/providers?api_key=dd1c306527d8caa33b2acb40c88ce2ae').json();
+def get_watch(ids):
     watch_list =[]
-    if 'results' in watch_pro and 'US' in watch_pro['results']and 'flatrate' in watch_pro['result']['US']:
-        pass
-    for i in range(len(watch_pro['results']['US'])):
-        return watch_pro['results']['US']['flatrate'][i]['provider_name']
+    for id in ids: 
+        watch_pro = requests.get('https://api.themoviedb.org/3/movie/'+str(id)+'/watch/providers?api_key=dd1c306527d8caa33b2acb40c88ce2ae').json();
+        if 'results' in watch_pro and 'US' in watch_pro['results']and 'flatrate' in watch_pro['results']['US']:
+            for i in range(len(watch_pro['results']['US']['flatrate'])):
+                watch_list.append(watch_pro['results']['US']['flatrate'][i]['provider_name'])
+    return watch_list
 
 def create_database(response):
     """Adding the list of movies to a database"""
@@ -56,10 +65,11 @@ def create_database(response):
     query_result = engine.execute("SELECT * FROM data;").fetchall()
     return pd.DataFrame(query_result)
 
-
-movies = database()['results']
-watchL = get_watch()
+user_entry = input('enter a movie id:')
+movies = movie_entry(user_entry)['results']
+id_list = get_id_list(movies)
 print(create_database(movies))
 # print(json.dumps(movies, indent=4))
 # print(get_movie_list(movies))
-pprint.pprint(watchL)
+pprint.pprint(get_watch(id_list))
+##pprint.pprint(watchL)
