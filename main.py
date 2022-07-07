@@ -39,6 +39,14 @@ def get_movie_list(response):
         list_movies.append(dict_item['title'])
     return list_movies
 
+#this function returns streaming services for a movie in the U.S region
+def get_watch():
+    watch_pro = requests.get('https://api.themoviedb.org/3/movie/508947/watch/providers?api_key=dd1c306527d8caa33b2acb40c88ce2ae').json();
+    watch_list =[]
+    if 'results' in watch_pro and 'US' in watch_pro['results']and 'flatrate' in watch_pro['result']['US']:
+        pass
+    for i in range(len(watch_pro['results']['US'])):
+        return watch_pro['results']['US']['flatrate'][i]['provider_name']
 
 def create_database(response):
     """Adding the list of movies to a database"""
@@ -50,6 +58,8 @@ def create_database(response):
 
 
 movies = database()['results']
-print(create_database(movies))
+watchL = get_watch()
+#print(create_database(movies))
 # print(json.dumps(movies, indent=4))
 # print(get_movie_list(movies))
+pprint.pprint(watchL)
