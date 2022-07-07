@@ -63,15 +63,17 @@ def create_database_for_movies(response):
     my_data_frame = pd.DataFrame(data)
     engine = db.create_engine('sqlite:///movies.db')
     my_data_frame.to_sql('data', con=engine, if_exists='replace', index=False)
+    col_names = ['Movie Title', 'Movie Id']
     query_result = engine.execute("SELECT * FROM data;").fetchall()
-    return pd.DataFrame(query_result)
+    return pd.DataFrame(query_result, columns = col_names)
 
 def create_database_for_providers(response):
     data = {"providers":get_watch(get_id_list(response))}
     df = pd.DataFrame(data)
     engine = db.create_engine('sqlite:///movies.db')
     df.to_sql('data', con=engine, if_exists='replace', index=False)
-    return pd.DataFrame(engine.execute("SELECT * FROM data;").fetchall())
+    col_names =['Streaming Services']
+    return pd.DataFrame(engine.execute("SELECT * FROM data;").fetchall(), columns = col_names)
 
 user_entry = input('enter a movie id:')
 movies = movie_entry(user_entry)['results']
@@ -80,5 +82,8 @@ print(create_database_for_movies(movies))
 print(create_database_for_providers(movies))
 # print(json.dumps(movies, indent=4))
 # print(get_movie_list(movies))
-pprint.pprint(get_watch(id_list))
+#pprint.pprint(get_watch(id_list))
 ##pprint.pprint(watchL)
+
+#col_names = ['Title', 'Author', 'Link']
+#df  = pd.DataFrame(columns = col_names)
