@@ -57,6 +57,7 @@ def get_watch(ids):
                 watch_list.append(watch_pro['results']['US']['flatrate'][i]['provider_name'])
     return watch_list
 
+#Function to create data table for movie titles/ movie ids 
 def create_database_for_movies(response):
     """Adding the list of movies to a database"""
     data = {"Names":get_movie_list(response), 'IDs':get_id_list(response)}
@@ -67,6 +68,7 @@ def create_database_for_movies(response):
     query_result = engine.execute("SELECT * FROM data;").fetchall()
     return pd.DataFrame(query_result, columns = col_names)
 
+#function to create a data table for streaming services
 def create_database_for_providers(response):
     data = {"providers":get_watch(get_id_list(response))}
     df = pd.DataFrame(data)
